@@ -31,7 +31,7 @@ class SignIn extends React.Component {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please check your Password!', min: 6 }],
+            rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },{ pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
           })(
             <Input
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}

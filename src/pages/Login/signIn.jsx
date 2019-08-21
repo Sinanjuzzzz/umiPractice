@@ -35,9 +35,8 @@ class SignIn extends React.Component {
             rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },{ pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
             validateTrigger:"onBlur"
           })(
-            <Input
+            <Input.Password
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
               placeholder="密码"
             />,
           )}

@@ -1,0 +1,28 @@
+.logo{
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  margin: -50px 0 0 -75px;
+  width: 150px;
+  height: 100px;
+  padding: 36px;
+  background-color: gray;
+  z-index: 1
+}
+
+.form {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin: 0 0 0 -160px;
+  width: 320px;
+  height: auto;
+  padding: 36px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+  z-index: 999;
+}
+
+.signinbutton{
+  position: relative;
+  width: 100%;
+}

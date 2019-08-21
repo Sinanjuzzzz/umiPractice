@@ -2,8 +2,9 @@ import React from 'react';
 import styles from './index.css';
 
 
-export default function() {
-  return (
+class Index extends React.Component {
+  render(){
+    return (
     <div className={styles.normal}>
       <div className={styles.welcome} />
       <ul className={styles.list}>
@@ -16,4 +17,7 @@ export default function() {
       </ul>
     </div>
   );
+  }
 }
+
+export default Index

@@ -1,11 +1,21 @@
 import React from 'react';
-import { Layout, Menu, Icon, Button } from 'antd';
+import { Layout, Menu, Icon, Button, Dropdown } from 'antd';
+import { connect } from "dva"
 import 'antd/dist/antd.css';
 import styles from './index.css';
 import router from 'umi/router';
+import { Link } from 'umi';
 
 const { Header, Content, Sider } = Layout;
 
+const mapStatetoPorps = ({ user }) => {
+  const { username } = user
+  return {
+    username
+  }
+}
+
+@connect(mapStatetoPorps)
 class BasicLayout extends React.Component {
 
   constructor(props) {
@@ -23,7 +33,7 @@ class BasicLayout extends React.Component {
 
   render() {
 
-    const { children, location: { pathname } } = this.props
+    const { children, location: { pathname }, username } = this.props
 
     return (
       <div className={styles.basicLayout}>
@@ -59,6 +69,21 @@ class BasicLayout extends React.Component {
                         type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                       />
                     </Button>
+                    {
+                      username ? (
+                        <Dropdown trigger={['click']}>
+                          <Button>
+                            {"Hi, "+username}
+                            <Icon type="down" />
+                          </Button>
+                        </Dropdown>
+                      ) : (
+                        <Link to="/login">
+                        <Icon type="user">  
+                        </Icon>登陆
+                        </Link>
+                        )
+                    }
                   </Header>
                   <Content
                     style={{

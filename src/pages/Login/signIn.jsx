@@ -1,6 +1,6 @@
 import React from "react"
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
-import { Link } from 'umi'
+import { Link,router } from 'umi'
 import styles from "./login.css"
 
 @Form.create()
@@ -10,7 +10,7 @@ class SignIn extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        router.push("/index")
       }
     });
   };
@@ -31,7 +31,7 @@ class SignIn extends React.Component {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
+            rules: [{ required: true, message: 'Please check your Password!', min: 6 }],
           })(
             <Input
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}

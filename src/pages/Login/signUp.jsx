@@ -34,8 +34,6 @@ class SignUp extends React.Component {
     if (value && value !== getFieldValue('password')) {
       callback('两次输入不一致！')
     }
-
-    // 必须总是返回一个 callback，否则 validateFields 无法响应
     callback();
   }
 
@@ -45,7 +43,7 @@ class SignUp extends React.Component {
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('email', {
-            rules: [{ required: true, message: 'Please input your Email !' }],
+            rules: [{ required: true, message: '请输入邮箱!' }],
             validateTrigger:"onBlur"
           })(
             <AutoComplete
@@ -57,25 +55,29 @@ class SignUp extends React.Component {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },
+            rules: [{ required: true, message: '请输入密码!' },
+            {min: 6, message: '密码长度不小于6位!'},
             { pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
             validateTrigger:"onBlur"
           })(
             <Input
               type="password"
               placeholder="至少6位密码，区分大小写"
+              allowClear
             />,
           )}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('confirm', {
-            rules: [{ required: true, message: 'Please check your Password Confirmation !', min: 6, max:10 },
+            rules: [{ required: true, message: '请输入密码!' },
+            {min: 6, message: '密码长度不小于6位!'},
             { validator: this.passwordValidator }],
             validateTrigger:"onBlur"
           })(
             <Input
               type="password"
               placeholder="确认密码"
+              allowClear
             />,
           )}
         </Form.Item>

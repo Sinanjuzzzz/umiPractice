@@ -21,7 +21,10 @@ class SignIn extends React.Component {
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+            rules: [{ required: true, message: '请输入用户名!' },
+            {min: 6, message: '用户名应不小于6位!'},
+            {max: 10, message: '用户名大于10位!'},
+          ],
             validateTrigger:"onBlur"
           })(
             <Input
@@ -32,7 +35,10 @@ class SignIn extends React.Component {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },{ pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
+            rules: [{ required: true, message: '请输入密码!' },
+            {min: 6, message: '密码长度不小于6位!'},
+            { pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }
+          ],
             validateTrigger:"onBlur"
           })(
             <Input.Password

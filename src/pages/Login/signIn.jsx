@@ -22,6 +22,7 @@ class SignIn extends React.Component {
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
+            validateTrigger:"onBlur"
           })(
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -32,6 +33,7 @@ class SignIn extends React.Component {
         <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },{ pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
+            validateTrigger:"onBlur"
           })(
             <Input
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}

@@ -8,6 +8,7 @@ class SignUp extends React.Component {
 
   state = {
     email: [],
+    canPasswordValidate: false,
   }
 
   handleSubmit = (e) => {
@@ -45,6 +46,7 @@ class SignUp extends React.Component {
         <Form.Item>
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Please input your Email !' }],
+            validateTrigger:"onBlur"
           })(
             <AutoComplete
               dataSource={this.state.email}
@@ -57,6 +59,7 @@ class SignUp extends React.Component {
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'Please check your Password!', min: 6, max:10 },
             { pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
+            validateTrigger:"onBlur"
           })(
             <Input
               type="password"
@@ -67,8 +70,8 @@ class SignUp extends React.Component {
         <Form.Item>
           {getFieldDecorator('confirm', {
             rules: [{ required: true, message: 'Please check your Password Confirmation !', min: 6, max:10 },
-            { validator: this.passwordValidator }
-            ],
+            { validator: this.passwordValidator }],
+            validateTrigger:"onBlur"
           })(
             <Input
               type="password"

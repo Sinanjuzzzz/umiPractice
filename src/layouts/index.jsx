@@ -53,7 +53,7 @@ class BasicLayout extends React.Component {
                 {children}
               </Layout>
             ) : (
-              <Layout className={styles.primaryLayout} >
+              <Layout className={styles.primaryLayout} style={{height:"auto"}} >
                 <Sider trigger={null} width={200} collapsible collapsed={this.state.collapsed} theme='light' >
                   <Menu
                     defaultSelectedKeys={['1']}
@@ -70,7 +70,7 @@ class BasicLayout extends React.Component {
                     </Menu.Item>
                   </Menu>
                 </Sider>
-                <Layout>
+                <Layout style={{height:"auto"}}>
                   <Header style={{ background: '#fff', padding: 0 }}>
                     <Row type="flex">
                       <Col span={2}>

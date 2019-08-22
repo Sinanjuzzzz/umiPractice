@@ -1,5 +1,6 @@
 import React, { Fragment } from "react"
-import { Table, Pagination } from 'antd'
+import { Table, Pagination } from "antd"
+import {Link} from "umi"
 import { connect } from "dva"
 
 const columns = [
@@ -43,6 +44,16 @@ const columns = [
     ],
     onFilter: (value, todo) => todo.completed === value,
   },
+  {
+    title: '详情',
+    dataIndex: 'id',
+    key: 'id',
+    render: id => (
+      <Link to={`/detail/${id}`}>
+        详情
+      </Link>
+    ),
+  },
 ]
 
 const mapStatetoProps = ({ todos, loading }) => {
@@ -58,6 +69,10 @@ const mapStatetoProps = ({ todos, loading }) => {
 
 @connect(mapStatetoProps)
 class todosTable extends React.Component {
+
+  state = {
+    selectedRowKeys: [],
+  };
 
   componentDidMount() {
     this.fetchToDosList(1, 10)
@@ -79,9 +94,20 @@ class todosTable extends React.Component {
     this.fetchToDosList(page, size)
   }
 
+  onSelectChange = selectedRowKeys => {
+    this.setState({ selectedRowKeys });
+  };
+
   render() {
+
+    const { selectedRowKeys } = this.state;
     const { loading, list, total, page, size } = this.props
     const pageSizeOptions = ['5', '10', '15']
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
+
     return (
       <Fragment>
         <Table
@@ -90,6 +116,7 @@ class todosTable extends React.Component {
           loading={loading}
           rowKey={record => record.id}
           pagination={false}
+          rowSelection={rowSelection}
         />
 
         <Pagination

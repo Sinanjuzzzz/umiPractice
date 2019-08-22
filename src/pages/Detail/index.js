@@ -25,6 +25,8 @@ class Detail extends React.Component {
       payload: {
         queryMode: "id",
         queryValue: id,
+        page: 1,
+        size: 1,
       }
     })
   }

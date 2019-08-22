@@ -5,7 +5,7 @@ export function queryToDosList(params) {
   return request(`/api/todos?_page=${page}&_limit=${size}`);
 }
 
-export function queryToDo(params){
-  const { queryMode, queryValue } = params
-  return request(`/api/todos?${queryMode}=${queryValue}`);
+export function queryToDo(params) {
+  const { queryMode, queryValue, page, size } = params
+  return request(`/api/todos?${queryMode}=${queryValue}&_page=${page}&_limit=${size}`);
 }

@@ -14,6 +14,10 @@ export default [
           { path: '/login/signup', component: './Login/signUp' },
         ]
       },
+      {
+        path: '/table',
+        component: "./Table/index",
+      },
 
     ]
   }

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react"
-import { Table, Pagination } from "antd"
+import React from "react"
+import { Table, Pagination, Row } from "antd"
 import {Link} from "umi"
 import { connect } from "dva"
 
@@ -109,7 +109,7 @@ class todosTable extends React.Component {
     };
 
     return (
-      <Fragment>
+        <Row type="flex" justify="center">
         <Table
           columns={columns}
           dataSource={list}
@@ -127,8 +127,9 @@ class todosTable extends React.Component {
           current={page}
           pageSize={size}
           onChange={this.fetchToDosList}
+          style={{marginTop:"20px"}}
         />
-      </Fragment>
+        </Row>
     )
   }
 }

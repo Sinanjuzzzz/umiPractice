@@ -50,7 +50,7 @@ const columns = [
   {
     title: '详情',
     dataIndex: 'id',
-    key: 'id',
+    key: 'xq',
     render: id => (
       <Link to={`/detail/${id}`}>
         详情
@@ -80,7 +80,6 @@ class todosTable extends React.Component {
 
   componentDidMount() {
     this.fetchToDosList(1, 10)
-
   }
 
   fetchToDosList = (page, size) => {
@@ -148,17 +147,15 @@ class todosTable extends React.Component {
               <Option value="userId">UserID</Option>
             </Select>
           </Col>
-
           <Col span={10} >
             <Search
               placeholder={"输入" + queryMode}
               enterButton="Search"
               size="default"
-              onSearch={value => this.queryToDo(queryMode, value)}
+              onSearch={value => this.queryToDo(queryMode, value, 1, size)}
               allowClear
             />
           </Col>
-
         </Row>
         <Row type="flex" justify="center">
           <Table
@@ -182,7 +179,6 @@ class todosTable extends React.Component {
             style={{ margin: "20px 20px 20px 20px" }}
           />
         </Row>
-
       </Fragment>
     )
   }

@@ -31,18 +31,21 @@ class BasicLayout extends React.Component {
     super(props)
     this.state = {
       collapsed: false,
+      siderWidth: '200px',
     }
   }
 
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
+      siderWidth: this.state.collapsed ? '40px' : '200px'
     });
   };
 
   render() {
 
     const { children, location: { pathname }, username } = this.props
+    const {collapsed, siderWidth} = this.state
 
     return (
       <div className={styles.basicLayout}>
@@ -54,11 +57,15 @@ class BasicLayout extends React.Component {
               </Layout>
             ) : (
               <Layout className={styles.primaryLayout} style={{height:"auto"}} >
-                <Sider trigger={null} width={200} collapsible collapsed={this.state.collapsed} theme='light' >
+                <Sider trigger={null} width={200} collapsible collapsed={collapsed} theme='light' >
                   <Menu
                     defaultSelectedKeys={['1']}
                     mode="inline"
                     theme="light"
+                    style={{
+                      position:"fixed",
+                      width: {siderWidth},
+                  }}
                   >
                     <Menu.Item key="1" onClick={() => { router.push('/index') }}>
                       <Icon type="home" />

@@ -22,7 +22,7 @@ export default {
           data,
           total: parseInt(headers['x-total-count'], 10),
           page: parseInt(page, 10),
-          size: size,
+          size,
         }
       })
     },
@@ -34,7 +34,7 @@ export default {
           data,
           total: parseInt(headers['x-total-count'], 10),
           page: parseInt(page, 10),
-          size: 1,
+          size,
         }
       })
     }

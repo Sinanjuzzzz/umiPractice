@@ -66,7 +66,7 @@ const mapStatetoProps = ({ todos, loading }) => {
     total,
     page,
     size,
-    loading: loading.effects['todos/fetchToDosList'],
+    loading: loading.effects['todos/queryToDo'],
   };
 }
 
@@ -75,25 +75,18 @@ class todosTable extends React.Component {
 
   state = {
     selectedRowKeys: [],
-    queryMode: "id"
+    queryMode: null,
+    queryValue: null,
   };
 
   componentDidMount() {
-    this.fetchToDosList(1, 10)
-  }
-
-  fetchToDosList = (page, size) => {
-    const { dispatch } = this.props
-    dispatch({
-      type: "todos/fetchToDosList",
-      payload: {
-        page,
-        size,
-      }
-    })
+    this.queryToDo(null, null, 1, 10)
   }
 
   queryToDo(queryMode, queryValue, page, size) {
+    this.setState({
+      queryValue,
+    })
     const { dispatch } = this.props
     dispatch({
       type: 'todos/queryToDo',
@@ -111,7 +104,8 @@ class todosTable extends React.Component {
   }
 
   onShowSizeChange = (page, size) => {
-    this.fetchToDosList(page, size)
+    const { queryMode, queryValue } = this.state;
+    this.queryToDo(queryMode, queryValue, page, size)
   }
 
   onSelectChange = selectedRowKeys => {
@@ -120,7 +114,7 @@ class todosTable extends React.Component {
 
   render() {
 
-    const { selectedRowKeys, queryMode } = this.state;
+    const { selectedRowKeys, queryMode, queryValue } = this.state;
     const { loading, list, total, page, size } = this.props
     const pageSizeOptions = ['5', '10', '15']
     const rowSelection = {
@@ -175,7 +169,7 @@ class todosTable extends React.Component {
             total={total}
             current={page}
             pageSize={size}
-            onChange={this.fetchToDosList}
+            onChange={(currentPage, pageSize) => { this.queryToDo(queryMode, queryValue, currentPage, pageSize) }}
             style={{ margin: "20px 20px 20px 20px" }}
           />
         </Row>

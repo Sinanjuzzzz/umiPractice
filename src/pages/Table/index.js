@@ -125,17 +125,16 @@ class todosTable extends React.Component {
     return (
       <Fragment>
         <Row type="flex" justify="center" style={{ marginBottom: "20px" }}>
-          <Col>
+          <Col >
             <Select
               showSearch
-              style={{ width: 100 }}
+              style={{ width: 102 }}
               placeholder="查询方式"
               optionFilterProp="children"
               filterOption={(input, option) =>
                 option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
               onChange={option => { this.onModChange(option) }}
-              defaultValue="id"
             >
               <Option value="id">ID</Option>
               <Option value="userId">UserID</Option>
@@ -143,7 +142,7 @@ class todosTable extends React.Component {
           </Col>
           <Col span={10} >
             <Search
-              placeholder={"输入" + queryMode}
+              placeholder={queryMode ? ("请输入" + queryMode):"请选择查询方式" }
               enterButton="Search"
               size="default"
               onSearch={value => this.queryToDo(queryMode, value, 1, size)}

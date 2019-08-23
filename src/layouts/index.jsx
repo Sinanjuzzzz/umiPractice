@@ -38,7 +38,7 @@ class BasicLayout extends React.Component {
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
-      siderWidth: this.state.collapsed ? '40px' : '200px'
+      siderWidth: this.state.collapsed ?  '200px' : '80px'
     });
   };
 
@@ -64,7 +64,7 @@ class BasicLayout extends React.Component {
                     theme="light"
                     style={{
                       position:"fixed",
-                      width: {siderWidth},
+                      width: `${siderWidth}`
                   }}
                   >
                     <Menu.Item key="1" onClick={() => { router.push('/index') }}>

@@ -1,10 +1,10 @@
 import React, { Fragment } from "react"
-import { Table, Pagination, Row, Col, Select, Input } from "antd"
+import { Table, Pagination, Row, Col, Select, Input, Form, Button, Icon } from "antd"
 import { Link } from "umi"
 import { connect } from "dva"
 
-const { Search } = Input
-const { Option } = Select;
+// const { Search } = Input
+// const { Option } = Select;
 
 const columns = [
   {
@@ -70,6 +70,7 @@ const mapStatetoProps = ({ todos, loading }) => {
   };
 }
 
+@Form.create()
 @connect(mapStatetoProps)
 class todosTable extends React.Component {
 
@@ -77,10 +78,34 @@ class todosTable extends React.Component {
     selectedRowKeys: [],
     queryMode: null,
     queryValue: null,
+    expand: false,
   };
 
   componentDidMount() {
     this.queryToDo(null, null, 1, 10)
+  }
+
+  getFields() {
+    const count = this.state.expand ? 4 : 3;
+    const { getFieldDecorator } = this.props.form;
+    const children = [];
+    for (let i = 0; i < 4; i++) {
+      children.push(
+        <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+          <Form.Item label={`Field ${i}`}>
+            {getFieldDecorator(`field-${i}`, {
+              rules: [
+                {
+                  required: true,
+                  message: 'Input something!',
+                },
+              ],
+            })(<Input placeholder="placeholder" />)}
+          </Form.Item>
+        </Col>,
+      );
+    }
+    return children;
   }
 
   queryToDo(queryMode, queryValue, page, size) {
@@ -112,6 +137,11 @@ class todosTable extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
+  toggle = () => {
+    const { expand } = this.state;
+    this.setState({ expand: !expand });
+  };
+
   render() {
 
     const { selectedRowKeys, queryMode, queryValue } = this.state;
@@ -124,8 +154,9 @@ class todosTable extends React.Component {
 
     return (
       <Fragment>
-        <Row type="flex" justify="center" style={{ marginBottom: "20px" }}>
-          <Col >
+        <Row type="flex" justify="start" gutter={24} style={{width:"80%",left:"10%",position:"relative"}}>
+        {this.getFields()}
+          {/* <Col >
             <Select
               showSearch
               style={{ width: 102 }}
@@ -148,6 +179,19 @@ class todosTable extends React.Component {
               onSearch={value => this.queryToDo(queryMode, value, 1, size)}
               allowClear
             />
+          </Col> */}
+        </Row>
+        <Row style={{position:"relative",right:"10%",marginBottom:"20px"}}>
+          <Col span={24} style={{ textAlign: 'right' }}>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+            <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              Clear
+            </Button>
+            <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
+              Collapse <Icon type={this.state.expand ? 'up' : 'down'} />
+            </a>
           </Col>
         </Row>
         <Row type="flex" justify="center">

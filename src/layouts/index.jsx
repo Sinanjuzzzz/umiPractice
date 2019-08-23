@@ -10,7 +10,7 @@ const { Header, Content, Sider } = Layout;
 
 const menu = (
   <Menu >
-    <Menu.Item key="1" onClick={()=>{router.push("/login")}}>
+    <Menu.Item key="1" onClick={() => { router.push("/login") }}>
       <Icon type="logout" />
       logout
     </Menu.Item>
@@ -38,14 +38,21 @@ class BasicLayout extends React.Component {
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
-      siderWidth: this.state.collapsed ?  '200px' : '80px'
+      siderWidth: this.state.collapsed ? '200px' : '80px'
     });
   };
 
   render() {
 
     const { children, location: { pathname }, username } = this.props
-    const {collapsed, siderWidth} = this.state
+    const { collapsed, siderWidth } = this.state
+
+    const headerMenu = [
+      { label: '首页', value: '1', path: '/index' },
+      { label: '表单', value: '2', path: '/table' },
+    ]
+    const matchMenu = pathname === '/' ? { value: '1' } : headerMenu.find(_ => pathname.includes(_.path))
+    const defaultSelectedKeys = matchMenu ? [matchMenu.value] : []
 
     return (
       <div className={styles.basicLayout}>
@@ -56,16 +63,16 @@ class BasicLayout extends React.Component {
                 {children}
               </Layout>
             ) : (
-              <Layout className={styles.primaryLayout} style={{height:"auto"}} >
+              <Layout className={styles.primaryLayout} style={{ height: "auto" }} >
                 <Sider trigger={null} width={200} collapsible collapsed={collapsed} theme='light' >
                   <Menu
-                    defaultSelectedKeys={['1']}
+                    defaultSelectedKeys={defaultSelectedKeys}
                     mode="inline"
                     theme="light"
                     style={{
-                      position:"fixed",
+                      position: "fixed",
                       width: `${siderWidth}`
-                  }}
+                    }}
                   >
                     <Menu.Item key="1" onClick={() => { router.push('/index') }}>
                       <Icon type="home" />
@@ -77,7 +84,7 @@ class BasicLayout extends React.Component {
                     </Menu.Item>
                   </Menu>
                 </Sider>
-                <Layout style={{height:"auto"}}>
+                <Layout style={{ height: "auto" }}>
                   <Header style={{ background: '#fff', padding: 0 }}>
                     <Row type="flex">
                       <Col span={2}>
@@ -113,7 +120,7 @@ class BasicLayout extends React.Component {
                       padding: 24,
                       background: '#fff',
                       minHeight: 280,
-                      height:"auto",
+                      height: "auto",
                     }}
                   >
                     {children}

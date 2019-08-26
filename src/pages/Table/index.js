@@ -74,12 +74,12 @@ class todosTable extends React.Component {
 
   state = {
     selectedRowKeys: [],
-    queryValue: [],
+    queryParams: [],
     expand: false,
   };
 
   componentDidMount() {
-    this.queryToDo(null, null, null, 1, 10)
+    this.queryToDo(this.state.queryParams, 1, 10)
   }
 
   getFields() {
@@ -88,7 +88,7 @@ class todosTable extends React.Component {
     const children = [
       (
         <Col span={8} key={0} style={{ display: 'block' }}>
-          <Form.Item label={'用户ID'}>
+          <Form.Item label={'用户ID'} style={{ display: 'flex' }}>
             {getFieldDecorator('userId', {
               rules: [
               ],
@@ -98,7 +98,7 @@ class todosTable extends React.Component {
       ),
       (
         <Col span={8} key={1} style={{ display: 'block' }}>
-          <Form.Item label={'事件ID'}>
+          <Form.Item label={'事件ID'} style={{ display: 'flex' }}>
             {getFieldDecorator('id', {
               rules: [
               ],
@@ -108,7 +108,7 @@ class todosTable extends React.Component {
       ),
       (
         <Col span={8} key={2} style={{ display: 'block' }}>
-          <Form.Item label={`是否完成`}>
+          <Form.Item label={`是否完成`} style={{ display: 'flex' }}>
             {getFieldDecorator(`completed`, {
               rules: [
               ],
@@ -121,7 +121,7 @@ class todosTable extends React.Component {
       ),
       (
         <Col span={8} key={3} style={{ display: count === 4 ? 'block' : 'none' }}>
-          <Form.Item label={`空着`}>
+          <Form.Item label={`空着`} style={{ display: 'flex' }}>
             {getFieldDecorator(`empty`, {
               rules: [
               ],
@@ -134,17 +134,15 @@ class todosTable extends React.Component {
     return children;
   }
 
-  queryToDo(userId, id, completed, page, size) {
+  queryToDo(queryParams, page, size) {
     this.setState({
-      queryValue: [userId, id, completed],
+      queryParams,
     })
     const { dispatch } = this.props
     dispatch({
       type: 'todos/queryToDo',
       payload: {
-        userId,
-        id,
-        completed,
+        queryParams,
         page,
         size,
       }
@@ -152,8 +150,8 @@ class todosTable extends React.Component {
   }
 
   onShowSizeChange = (page, size) => {
-    const { queryValue : [userId, id, completed]   } = this.state;
-    this.queryToDo(userId, id, completed, page, size)
+    const { queryParams } = this.state;
+    this.queryToDo(queryParams, page, size)
   }
 
   onSelectChange = selectedRowKeys => {
@@ -166,7 +164,8 @@ class todosTable extends React.Component {
 
   handleSearch = (e) => {
     this.props.form.validateFields((err, values) => {
-      this.queryToDo(values.userId, values.id, values.completed, 1, this.props.size)
+      const queryParams = [values.userId, values.id, values.completed]
+      this.queryToDo(queryParams, 1, this.props.size)
     });
   };
 
@@ -177,7 +176,7 @@ class todosTable extends React.Component {
 
   render() {
 
-    const { selectedRowKeys, queryValue } = this.state;
+    const { selectedRowKeys, queryParams } = this.state;
     const { loading, list, total, page, size } = this.props
     const pageSizeOptions = ['5', '10', '15']
     const rowSelection = {
@@ -187,11 +186,11 @@ class todosTable extends React.Component {
 
     return (
       <Fragment>
-        <Row type="flex" justify="start" gutter={24} style={{ width: "80%", left: "10%", position: "relative" }}>
+        <Row type="flex" justify="space-between" gutter={24} style={{ width: '80%', left: '13%', position: 'relative' }}>
           {this.getFields()}
         </Row>
-        <Row style={{ position: "relative", right: "10%", marginBottom: "20px" }}>
-          <Col span={24} style={{ textAlign: 'right' }}>
+        <Row type="flex" justify="end" gutter={24} style={{ marginBottom: "20px" }}>
+          <Col span={8} style={{ textAlign: 'left' }}>
             <Button type="primary" htmlType="submit" onClick={this.handleSearch}>
               搜索
             </Button>
@@ -221,7 +220,7 @@ class todosTable extends React.Component {
             total={total}
             current={page}
             pageSize={size}
-            onChange={(currentPage, pageSize) => { this.queryToDo(...queryValue, currentPage, pageSize) }}
+            onChange={(currentPage, pageSize) => { this.queryToDo(queryParams, currentPage, pageSize) }}
             style={{ margin: "20px 20px 20px 20px" }}
           />
         </Row>

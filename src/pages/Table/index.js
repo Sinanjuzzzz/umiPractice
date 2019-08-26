@@ -1,10 +1,8 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Fragment } from "react"
-import { Table, Pagination, Row, Col, Select, Input, Form, Button, Icon } from "antd"
+import { Table, Pagination, Row, Col, Input, Form, Button, Icon, Radio } from "antd"
 import { Link } from "umi"
 import { connect } from "dva"
-
-// const { Search } = Input
-// const { Option } = Select;
 
 const columns = [
   {
@@ -76,65 +74,100 @@ class todosTable extends React.Component {
 
   state = {
     selectedRowKeys: [],
-    queryMode: null,
-    queryValue: null,
+    queryValue: [],
     expand: false,
   };
 
   componentDidMount() {
-    this.queryToDo(null, null, 1, 10)
+    this.queryToDo(null, null, null, 1, 10)
   }
 
   getFields() {
     const count = this.state.expand ? 4 : 3;
     const { getFieldDecorator } = this.props.form;
-    const children = [];
-    for (let i = 0; i < 4; i++) {
-      children.push(
-        <Col span={8} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-          <Form.Item label={`Field ${i}`}>
-            {getFieldDecorator(`field-${i}`, {
+    const children = [
+      (
+        <Col span={8} key={0} style={{ display: 'block' }}>
+          <Form.Item label={'用户ID'}>
+            {getFieldDecorator('userId', {
               rules: [
-                {
-                  required: true,
-                  message: 'Input something!',
-                },
               ],
-            })(<Input placeholder="placeholder" />)}
+            })(<Input placeholder="请输入用户ID" />)}
           </Form.Item>
-        </Col>,
-      );
-    }
+        </Col>
+      ),
+      (
+        <Col span={8} key={1} style={{ display: 'block' }}>
+          <Form.Item label={'事件ID'}>
+            {getFieldDecorator('id', {
+              rules: [
+              ],
+            })(<Input placeholder="请输入事件ID" />)}
+          </Form.Item>
+        </Col>
+      ),
+      (
+        <Col span={8} key={2} style={{ display: 'block' }}>
+          <Form.Item label={`是否完成`}>
+            {getFieldDecorator(`completed`, {
+              rules: [
+              ],
+            })(<Radio.Group>
+              <Radio value={true}>已完成</Radio>
+              <Radio value={false}>未完成</Radio>
+            </Radio.Group>)}
+          </Form.Item>
+        </Col>
+      ),
+      (
+        <Col span={8} key={3} style={{ display: count === 4 ? 'block' : 'none' }}>
+          <Form.Item label={`空着`}>
+            {getFieldDecorator(`empty`, {
+              rules: [
+              ],
+            })(<Input placeholder="闲着也是空着" />)}
+          </Form.Item>
+        </Col>
+      ),
+    ];
+
     return children;
   }
 
-  queryToDo(queryMode, queryValue, page, size) {
+  queryToDo(userId, id, completed, page, size) {
     this.setState({
-      queryValue,
+      queryValue: [userId, id, completed],
     })
     const { dispatch } = this.props
     dispatch({
       type: 'todos/queryToDo',
       payload: {
-        queryMode,
-        queryValue,
+        userId,
+        id,
+        completed,
         page,
         size,
       }
     })
   }
 
-  onModChange = (value) => {
-    this.setState({ queryMode: value })
-  }
-
   onShowSizeChange = (page, size) => {
-    const { queryMode, queryValue } = this.state;
-    this.queryToDo(queryMode, queryValue, page, size)
+    const { queryValue : [userId, id, completed]   } = this.state;
+    this.queryToDo(userId, id, completed, page, size)
   }
 
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys });
+  };
+
+  handleReset = () => {
+    this.props.form.resetFields();
+  };
+
+  handleSearch = (e) => {
+    this.props.form.validateFields((err, values) => {
+      this.queryToDo(values.userId, values.id, values.completed, 1, this.props.size)
+    });
   };
 
   toggle = () => {
@@ -144,7 +177,7 @@ class todosTable extends React.Component {
 
   render() {
 
-    const { selectedRowKeys, queryMode, queryValue } = this.state;
+    const { selectedRowKeys, queryValue } = this.state;
     const { loading, list, total, page, size } = this.props
     const pageSizeOptions = ['5', '10', '15']
     const rowSelection = {
@@ -154,43 +187,19 @@ class todosTable extends React.Component {
 
     return (
       <Fragment>
-        <Row type="flex" justify="start" gutter={24} style={{width:"80%",left:"10%",position:"relative"}}>
-        {this.getFields()}
-          {/* <Col >
-            <Select
-              showSearch
-              style={{ width: 102 }}
-              placeholder="查询方式"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              onChange={option => { this.onModChange(option) }}
-            >
-              <Option value="id">ID</Option>
-              <Option value="userId">UserID</Option>
-            </Select>
-          </Col>
-          <Col span={10} >
-            <Search
-              placeholder={queryMode ? ("请输入" + queryMode):"请选择查询方式" }
-              enterButton="Search"
-              size="default"
-              onSearch={value => this.queryToDo(queryMode, value, 1, size)}
-              allowClear
-            />
-          </Col> */}
+        <Row type="flex" justify="start" gutter={24} style={{ width: "80%", left: "10%", position: "relative" }}>
+          {this.getFields()}
         </Row>
-        <Row style={{position:"relative",right:"10%",marginBottom:"20px"}}>
+        <Row style={{ position: "relative", right: "10%", marginBottom: "20px" }}>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">
-              Search
+            <Button type="primary" htmlType="submit" onClick={this.handleSearch}>
+              搜索
             </Button>
             <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-              Clear
+              清空
             </Button>
             <a style={{ marginLeft: 8, fontSize: 12 }} onClick={this.toggle}>
-              Collapse <Icon type={this.state.expand ? 'up' : 'down'} />
+              展开 <Icon type={this.state.expand ? 'up' : 'down'} />
             </a>
           </Col>
         </Row>
@@ -212,7 +221,7 @@ class todosTable extends React.Component {
             total={total}
             current={page}
             pageSize={size}
-            onChange={(currentPage, pageSize) => { this.queryToDo(queryMode, queryValue, currentPage, pageSize) }}
+            onChange={(currentPage, pageSize) => { this.queryToDo(...queryValue, currentPage, pageSize) }}
             style={{ margin: "20px 20px 20px 20px" }}
           />
         </Row>

@@ -26,8 +26,8 @@ export default {
         }
       })
     },
-    *queryToDo({ payload: { queryMode, queryValue, page, size } }, { call, put }) {
-      const { data, headers } = yield call(todosServices.queryToDo, { queryMode, queryValue, page, size })
+    *queryToDo({ payload: { userId, id, completed, page, size } }, { call, put }) {
+      const { data, headers } = yield call(todosServices.queryToDo, { userId, id, completed, page, size })
       yield put({
         type: 'save',
         payload: {

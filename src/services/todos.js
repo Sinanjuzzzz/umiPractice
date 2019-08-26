@@ -6,6 +6,7 @@ export function queryToDosList(params) {
 }
 
 export function queryToDo(params) {
-  const { queryMode, queryValue, page, size } = params
-  return request(`/api/todos?${queryMode}=${queryValue}&_page=${page}&_limit=${size}`);
+  const { userId, id, completed, page, size } = params
+  const paramsUrl =  (userId ? "userId="+userId : "") + (id ? "&id="+id : "")+ (completed ? "&completed="+completed : "")
+  return request(`/api/todos?${paramsUrl}&_page=${page}&_limit=${size}`);
 }

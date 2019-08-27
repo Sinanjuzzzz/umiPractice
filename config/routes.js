@@ -14,9 +14,9 @@ export default [
           { path: '/login/signup', component: './Login/signUp' },
         ]
       },
-      {path: '/table',component: "./Table/index"},
-      {path: '/detail/:id',component: "./Detail/index"},
-
+      { path: '/table', component: './Table' },
+      { path: '/detail/:id', component: './Detail' },
+      { path: '/form', component:'./Form'}
     ]
   }
 ]

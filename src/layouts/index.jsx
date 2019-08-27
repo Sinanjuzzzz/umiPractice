@@ -49,7 +49,8 @@ class BasicLayout extends React.Component {
 
     const headerMenu = [
       { label: '首页', value: '1', path: '/index' },
-      { label: '表单', value: '2', path: '/table' },
+      { label: '表格', value: '2', path: '/table' },
+      { label: '表单', value: '3', path: '/form' },
     ]
     const matchMenu = pathname === '/' ? { value: '1' } : headerMenu.find(_ => pathname.includes(_.path))
     const defaultSelectedKeys = matchMenu ? [matchMenu.value] : []
@@ -67,6 +68,7 @@ class BasicLayout extends React.Component {
                 <Sider trigger={null} width={200} collapsible collapsed={collapsed} theme='light' >
                   <Menu
                     defaultSelectedKeys={defaultSelectedKeys}
+                    selectedKeys={defaultSelectedKeys}
                     mode="inline"
                     theme="light"
                     style={{
@@ -80,6 +82,10 @@ class BasicLayout extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="2" onClick={() => { router.push('/table') }}>
                       <Icon type="table" />
+                      <span>Table</span>
+                    </Menu.Item>
+                    <Menu.Item key="3" onClick={() => { router.push('/form') }}>
+                      <Icon type="form" />
                       <span>Table</span>
                     </Menu.Item>
                   </Menu>

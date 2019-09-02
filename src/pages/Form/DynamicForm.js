@@ -1,4 +1,3 @@
-import React from 'react'
 import { Icon, Form, Row, Col, Input, Button } from 'antd';
 
 

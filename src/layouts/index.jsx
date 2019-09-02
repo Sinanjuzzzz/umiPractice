@@ -86,7 +86,7 @@ class BasicLayout extends React.Component {
                     </Menu.Item>
                     <Menu.Item key="3" onClick={() => { router.push('/form') }}>
                       <Icon type="form" />
-                      <span>Table</span>
+                      <span>Form</span>
                     </Menu.Item>
                   </Menu>
                 </Sider>

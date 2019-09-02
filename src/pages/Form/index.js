@@ -4,7 +4,7 @@ import DynameicForm from './DynamicForm'
 function Form(props) {
   return (
     <div>
-      <DynameicForm/>
+      <DynameicForm />
     </div>
   )
 }

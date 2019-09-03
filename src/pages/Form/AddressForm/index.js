@@ -1,4 +1,4 @@
-import { Radio, Form } from 'antd';
+import { Radio, Form, Row, Col } from 'antd';
 import AddressCascader from './AddressCascader'
 import NewAddress from './NewAddress'
 
@@ -36,9 +36,14 @@ function AddressForm(props) {
           </Radio.Group>
         )}
       </Form.Item>
-      {
-        addressFormItem[getFieldValue('addressType')]
-      }
+      <Row gutter={8} type="flex" align="middle">
+        <Col span={8}>
+          {
+            addressFormItem[getFieldValue('addressType')]
+          }
+        </Col>
+      </Row>
+
     </div>
   )
 }

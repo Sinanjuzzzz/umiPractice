@@ -44,7 +44,7 @@ function AddressCascader(props) {
         {getFieldDecorator('addressCascader', {
           initialValue: 0,
         })(
-          <Cascader options={options} placeholder="请选择" />
+          <Cascader options={options} placeholder="请选择" style={{position:'relative',width:'300px'}} />
         )}
       </Form.Item>
   )

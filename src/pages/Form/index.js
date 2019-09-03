@@ -2,6 +2,7 @@ import React from 'react'
 import DynameicForm from './DynamicForm'
 import DateForm from './DateForm'
 import AddressForm from './AddressForm'
+import InvoiceForm from './InvoiceForm'
 
 function Form(props) {
   return (
@@ -9,6 +10,7 @@ function Form(props) {
       <DynameicForm />
       <DateForm />
       <AddressForm />
+      <InvoiceForm />
     </div>
   )
 }

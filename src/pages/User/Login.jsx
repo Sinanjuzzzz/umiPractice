@@ -12,7 +12,7 @@ const mapStatetoPorps = ({loading}) => {
 
 @Form.create()
 @connect(mapStatetoPorps)
-class SignIn extends React.Component {
+class Login extends React.Component {
 
   handleSubmit = (e) => {
     const { dispatch, form: { validateFields, getFieldValue } } = this.props
@@ -83,4 +83,4 @@ class SignIn extends React.Component {
   }
 }
 
-export default SignIn
+export default Login

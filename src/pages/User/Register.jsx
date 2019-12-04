@@ -1,10 +1,20 @@
 import React from "react"
 import { Form, Input, AutoComplete, Button, Row } from 'antd';
-import { Link,router } from 'umi'
+import { Link, router } from 'umi'
+import { connect } from 'dva'
 import styles from "./login.css"
 
+const mapStateToProps = ({ user, loading }) => {
+  const { veriftState } = user
+  return {
+    veriftState,
+    loading: loading.effects['user/sendVerift'],
+  }
+}
+
+@connect(mapStateToProps)
 @Form.create()
-class SignUp extends React.Component {
+class Register extends React.Component {
 
   state = {
     email: [],
@@ -37,14 +47,25 @@ class SignUp extends React.Component {
     callback();
   }
 
+  sendVerift = (userPhone) => {
+    const { dispatch } = this.props
+    dispatch({
+      type: 'user/sendVerift',
+      payload: {
+        userphone: userPhone,
+      },
+    })
+  }
+
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { form } = this.props
+    const { getFieldDecorator } = form;
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('email', {
             rules: [{ required: true, message: '请输入邮箱!' }],
-            validateTrigger:"onBlur"
+            validateTrigger: "onBlur"
           })(
             <AutoComplete
               dataSource={this.state.email}
@@ -56,9 +77,9 @@ class SignUp extends React.Component {
         <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: '请输入密码!' },
-            {min: 6, message: '密码长度不小于6位!'},
-            { pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g") , message: '名称只允许包含数字、字母' }],
-            validateTrigger:"onBlur"
+            { min: 6, message: '密码长度不小于6位!' },
+            { pattern: new RegExp(/^[0-9a-zA-Z]{1,}$/, "g"), message: '名称只允许包含数字、字母' }],
+            validateTrigger: "onBlur"
           })(
             <Input
               type="password"
@@ -70,9 +91,9 @@ class SignUp extends React.Component {
         <Form.Item>
           {getFieldDecorator('confirm', {
             rules: [{ required: true, message: '请输入密码!' },
-            {min: 6, message: '密码长度不小于6位!'},
+            { min: 6, message: '密码长度不小于6位!' },
             { validator: this.passwordValidator }],
-            validateTrigger:"onBlur"
+            validateTrigger: "onBlur"
           })(
             <Input
               type="password"
@@ -91,9 +112,10 @@ class SignUp extends React.Component {
               </Link >
           </Row>
         </Form.Item>
+        <Button onClick={() => this.sendVerift('18258232093')} >Test</Button>
       </Form>
     );
   }
 }
 
-export default SignUp
+export default Register

@@ -6,17 +6,13 @@ export default [
       { path: '/', redirect: '/index' },
       { path: '/index', component: './index' },
       {
-        path: '/login',
-        component: './Login/loginLayout',
+        path: '/user',
+        component: './User/LoginLayout',
         routes: [
-          { path: '/login', redirect: '/login/signin' },
-          { path: '/login/signin', component: './Login/signIn' },
-          { path: '/login/signup', component: './Login/signUp' },
+          { path: '/user/login', component: './User/Login' },
+          { path: '/user/register', component: './User/Register' },
         ]
       },
-      { path: '/table', component: './Table' },
-      { path: '/detail/:id', component: './Detail' },
-      { path: '/form', component:'./Form'}
     ]
   }
 ]

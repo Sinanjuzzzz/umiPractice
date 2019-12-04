@@ -14,7 +14,7 @@ const config = {
   routes,
   proxy: {
     "/api": {
-      "target": "http://jsonplaceholder.typicode.com/",
+      "target": "http://39.107.238.66:5000/",
       "changeOrigin": true,
       "pathRewrite": { "^/api": "" }
     }

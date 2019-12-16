@@ -75,6 +75,19 @@ class Register extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
+          {getFieldDecorator('userphone', {
+            rules: [{ required: true, message: '请输入手机号码!' },
+            { len: 11, message: '请输入11位手机号码!' },
+            { pattern: new RegExp(/^[0-9]{1,}$/, "g"), message: '只允许包含数字' }],
+            validateTrigger: "onBlur"
+          })(
+            <Input
+              placeholder="请输入可接收验证码的手机号码"
+              allowClear
+            />,
+          )}
+        </Form.Item>
+        <Form.Item>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: '请输入密码!' },
             { min: 6, message: '密码长度不小于6位!' },
@@ -112,7 +125,7 @@ class Register extends React.Component {
               </Link >
           </Row>
         </Form.Item>
-        <Button onClick={() => this.sendVerift('18258232093')} >Test</Button>
+        <Button onClick={() => this.sendVerift(form.getFieldValue('userphone'))} >发送验证码</Button>
       </Form>
     );
   }

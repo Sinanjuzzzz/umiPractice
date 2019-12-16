@@ -58,7 +58,7 @@ class BasicLayout extends React.Component {
     return (
       <div className={styles.basicLayout}>
         {
-          pathname.indexOf("login") !== -1 ?
+          pathname.indexOf("user") !== -1 ?
             (
               <Layout>
                 {children}

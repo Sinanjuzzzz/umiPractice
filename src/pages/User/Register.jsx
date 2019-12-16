@@ -8,7 +8,7 @@ const mapStateToProps = ({ user, loading }) => {
   const { veriftState } = user
   return {
     veriftState,
-    loading: loading.effects['user/sendVerift'],
+    loading: loading.effects['user/sendEmailVerift'],
   }
 }
 
@@ -47,12 +47,12 @@ class Register extends React.Component {
     callback();
   }
 
-  sendVerift = (userPhone) => {
+  sendEmailVerift = (email) => {
     const { dispatch } = this.props
     dispatch({
-      type: 'user/sendVerift',
+      type: 'user/sendEmailVerift',
       payload: {
-        userphone: userPhone,
+        email: email,
       },
     })
   }
@@ -125,7 +125,7 @@ class Register extends React.Component {
               </Link >
           </Row>
         </Form.Item>
-        <Button onClick={() => this.sendVerift(form.getFieldValue('userphone'))} >发送验证码</Button>
+        <Button onClick={() => this.sendEmailVerift('1411780687@qq.com')} >发送验证码</Button>
       </Form>
     );
   }

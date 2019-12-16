@@ -16,8 +16,8 @@ export default {
     //   yield put({ type: 'saveCurrentUser', payload: { currentUser: { name: data, account: data } } })
     //   return { code, data, message }
     // },
-    * sendVerift({ payload }, { call, put }) {
-      const veriftResponse = yield call(userServices.sendVerift, payload)
+    * sendEmailVerift({ payload }, { call, put }) {
+      const veriftResponse = yield call(userServices.sendEmailVerift, payload)
       yield put({ type: 'saveVeriftState', payload: { veriftState: veriftResponse.msg } })
       return { message: veriftResponse.msg }
     },

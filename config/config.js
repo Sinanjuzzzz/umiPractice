@@ -14,7 +14,7 @@ const config = {
   routes,
   proxy: {
     "/api": {
-      "target": "http://39.107.238.66:5000/api/",
+      "target": "http://45.32.103.95:8000/api/",
       "changeOrigin": true,
       "pathRewrite": { "^/api": "" }
     }
